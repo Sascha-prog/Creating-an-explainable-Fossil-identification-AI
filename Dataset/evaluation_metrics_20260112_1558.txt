@@ -1,0 +1,38 @@
+=====================================================
+  MULTI-AGENT SYSTEM FORMAL EVALUATION REPORT
+  Date: 2026-01-12 15:58:54 = time 22.33 min
+=====================================================
+MEAN IDENTIfication + Reasoning= 1.83 s
+1. CLASSIFICATION PERFORMANCE
+               precision    recall  f1-score   support
+
+         hond       0.68      0.40      0.50       100
+runderachtige       0.49      0.47      0.48       100
+      rendier       0.82      0.54      0.65       100
+        paard       0.44      0.47      0.45       100
+      mammoet       0.39      0.47      0.43       100
+    neushoorn       0.49      0.54      0.51       100
+         beer       0.28      0.33      0.30       100
+     schelpen       0.50      0.84      0.63        38
+
+     accuracy                           0.48       738
+    macro avg       0.51      0.51      0.50       738
+ weighted avg       0.51      0.48      0.48       738
+
+
+2. LATENCY ANALYSIS (Seconds)
+          t_id    t_reas     t_xai
+mean  0.008543  0.251748  1.556809
+std   0.001503  0.094315  0.099273
+max   0.022930  0.928254  2.256751
+
+3. XAI FAITHFULNESS (Drop-in-Confidence)
+Mean Residual Confidence: 0.6562
+(A lower score indicates the XAI successfully isolated diagnostic features.)
+
+4. HARDWARE CONTEXT
+CPU: AMD Ryzen 7 9800X3D (Est. Load: 40%)
+GPU: NVIDIA RTX 5070 Ti (Est. Load: 20%)
+RAM: 32GB DDR5
+
+=====================================================
