@@ -44,19 +44,18 @@ The framework moves away from monolithic linear pipelines in favor of a Decouple
 # Clone the repository
 git clone https://github.com/Sascha-prog/Creating-an-explainable-Fossil-identification-AI.git
 
-# Navigate to directory
-cd Creating-an-explainable-Fossil-identification-AI
-
-# Install dependencies
-pip install -r requirements.txt
+# Navigate to Scripts and open FinalPrototype.ipynb
+# Run the code blocks from top to bottom to replicate each step
 ```
-### Usage
+### 📂 Data Acquisition
 
-Execute the integrated multi-agent pipeline on a specimen image to generate a comprehensive Fossil Analysis Report:
-
+The project utilizes a dataset of 5,000 specimens mapping to Naturalis reviewer notes. To synchronize the local image repository with the remote dataset, use the provided scraper utility:
 ```Bash
-python main.py --image dataset/images/sample_fossil.jpg
+# Ensure your mapping CSV is located at ../Dataset/images_mapping_newest.csv
+python scripts/scraper.py
 ```
+The scraper performs stream-based acquisition and includes idempotency checks to resume interrupted downloads.
+
 ## 📊 Scientific Validation
 
 The system’s reliability is measured using the Drop-in-Confidence (DIC) metric. By masking the diagnostic regions identified by the Inspector Agent, we measure the resulting confidence decay in the classification.
