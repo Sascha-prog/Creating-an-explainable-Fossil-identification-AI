@@ -1,80 +1,94 @@
-# Academic Project Page Template
 
-> **Update (September 2025)**: This template has been modernized with better design, SEO, and mobile support. For the original version, see the [original-version branch](https://github.com/eliahuhorwitz/Academic-project-page-template/tree/original-version).
+# LegaSea: A Multi-Agent System for Explainable Fossil Identification
 
-A clean, responsive template for academic project pages.
-
-
-Example project pages built using this template are:
-- https://horwitz.ai/probex
-- https://vision.huji.ac.il/probegen
-- https://horwitz.ai/mother
-- https://horwitz.ai/spectral_detuning
-- https://vision.huji.ac.il/ladeda
-- https://vision.huji.ac.il/dsire
-- https://horwitz.ai/podd
-- https://dreamix-video-editing.github.io
-- https://horwitz.ai/conffusion
-- https://horwitz.ai/3d_ads/
-- https://vision.huji.ac.il/ssrl_ad
-- https://vision.huji.ac.il/deepsim
+![alt text](https://img.shields.io/badge/License-MIT-yellow.svg)
 
 
+![alt text](https://img.shields.io/badge/python-3.9+-blue.svg)
 
-## Start using the template
-To start using the template click on `Use this Template`.
 
-The template uses html for controlling the content and css for controlling the style. 
-To edit the websites contents edit the `index.html` file. It contains different HTML "building blocks", use whichever ones you need and comment out the rest.  
+![alt text](https://img.shields.io/badge/PyTorch-EE4C2C?logo=pytorch&logoColor=white)
 
-**IMPORTANT!** Make sure to replace the `favicon.ico` under `static/images/` with one of your own, otherwise your favicon is going to be a dreambooth image of me.
 
-## What's New
+![alt text](https://img.shields.io/badge/Affiliation-Naturalis%20Biodiversity%20Center-green)
 
-- Modern, clean design with better mobile support
-- Improved SEO with proper meta tags and structured data
-- Performance improvements (lazy loading, optimized assets)
-- More Works dropdown
-- Copy button for BibTeX citations
-- Better accessibility
+Precise fossil identification is a fundamental prerequisite for reconstructing Ice Age biomes and documenting historical biodiversity patterns. The LegaSea project, coordinated by the Naturalis Biodiversity Center, aims to reconstruct Dutch Ice Age biomes through an AI-assisted citizen science approach. This project part focuses on developing and evaluating AI models for fossil identification, improving explainability methods, and enhancing the interaction between users and AI systems. The project seeks to make AI predictions intelligible, trustworthy, and useful for citizen scientists
+ 
 
-## Components
+## 🏛 Project Context
 
-- Teaser video
-- Image carousel
-- YouTube video embedding
-- Video carousel
-- PDF poster viewer
-- BibTeX citation
+Coordinated by the Naturalis Biodiversity Center, this project leverages a Design Science Research (DSR) methodology to transform crowdsourced data from oervondstchecker.nl into scientifically validated reconstructions. This repository represents the fulfillment of Level 4 Software Layer competencies (Analyse, Design, Realize, Advice).
+## 🏗 System Architecture
 
-## Customization
+The framework moves away from monolithic linear pipelines in favor of a Decoupled Multi-Agent Architecture. By separating cognitive tasks, the system ensures technical reproducibility and prevents "Clever Hans" effects—where models rely on environmental noise (like scale bars) rather than biological morphology.
+### Agent processing Tier
 
-The HTML file has TODO comments showing what to replace:
+   - Identification Agent: Uses a CLIP (ViT-B-32) transformer backbone pretrained on the laion2b_s34b_b79k dataset and fine-tuned on 5,000 expert-verified specimens.
 
-- Paper title, authors, institution, conference
-- Links (arXiv, GitHub, etc.)
-- Abstract and descriptions  
-- Videos, images, and PDFs
-- Related works in the dropdown
-- Meta tags for SEO and social sharing
+   - Reasoning Agent: A fine-tuned BLIP model that generates linguistic justifications for classifications, providing educational feedback to citizen scientists.
 
-### Meta Tags
-The template includes meta tags for better search engine visibility and social media sharing. These appear in the `<head>` section and help with:
-- Google Scholar indexing
-- Social media previews (Twitter, Facebook, LinkedIn)
-- Search engine optimization
+   - Inspector Agent (XAI): Provides dual-track visual validation via Grad-CAM (spatial focus) and LIME (texture/super-pixel relevance).
 
-Create a 1200x630px social preview image at `static/images/social_preview.png`.
+   - Orchestrator: Manages asynchronous communication via the AgentMessage protocol, ensuring consistent data payloads (tensors, labels, and heatmaps).
 
-## Tips
+## 🚀 Getting Started
+### Prerequisites
 
-- Compress images with [TinyPNG](https://tinypng.com)
-- Use YouTube for large videos (>10MB)  
-- Replace the favicon in `static/images/`
-- Works with GitHub Pages
+   - Python 3.9 or higher
 
-## Acknowledgments
-Parts of this project page were adopted from the [Nerfies](https://nerfies.github.io/) page.
+   - CUDA-compatible GPU (strongly recommended for BLIP inference)
 
-## Website License
-<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+### Installation
+
+```Bash
+# Clone the repository
+git clone https://github.com/Sascha-prog/Creating-an-explainable-Fossil-identification-AI.git
+
+# Navigate to directory
+cd Creating-an-explainable-Fossil-identification-AI
+
+# Install dependencies
+pip install -r requirements.txt
+```
+### Usage
+
+Execute the integrated multi-agent pipeline on a specimen image to generate a comprehensive Fossil Analysis Report:
+
+```Bash
+python main.py --image dataset/images/sample_fossil.jpg
+```
+## 📊 Scientific Validation
+
+The system’s reliability is measured using the Drop-in-Confidence (DIC) metric. By masking the diagnostic regions identified by the Inspector Agent, we measure the resulting confidence decay in the classification.
+
+   - Mean Residual Confidence: 0.6562
+
+   - Significance: This quantitative audit ensures the model's logic is grounded in diagnostic morphological features rather than spurious background correlations.
+
+## 🔮 Future Roadmap
+
+   - Conversational AI: Re-introducing high-parameter models (e.g., BLIP-FLAN) fine-tuned on specialized paleontological jargon for interactive user querying.
+
+   - Preprocessing ROI: Implementing automated bounding-box localization to isolate fossil specimens from sediment and scale-bar noise.
+
+   - On-Device Deployment: Quantizing weights for real-time mobile inference at the point of discovery.
+
+   - Standardized Expert Feedback: Enhancing datasets with descriptive expert annotations rather than binary labels.
+
+## 📚 Reference & Citation
+
+If you use this artifact in your research or wish to reference the portfolio deliverables, please use the following citation format:
+code Bibtex
+```Bibtex
+@software{Ingemey2026LegaSea,
+  author = {Ingemey, Sascha},
+  title = {The LegaSea Project: A Multi-Agent System for Explainable Fossil Identification},
+  year = {2025},
+  publisher = {GitHub},
+  journal = {GitHub Repository},
+  howpublished = {\url{https://github.com/Sascha-prog/Creating-an-explainable-Fossil-identification-AI}}
+}
+```
+## 📄 License
+
+Distributed under the MIT License. See LICENSE for more information.
