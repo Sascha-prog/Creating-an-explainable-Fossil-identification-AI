@@ -6,9 +6,7 @@ from PIL import Image
 import open_clip
 import os
 
-# --------------------------
 # Config
-# --------------------------
 json_path = "dataset/dataset.json"
 image_folder = "dataset/images/"
 model_name = "ViT-B-32"
@@ -18,9 +16,7 @@ epochs = 5
 lr = 1e-5
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
-# --------------------------
 # Dataset
-# --------------------------
 class FossilDataset(Dataset):
     def __init__(self, json_file, image_dir, preprocess):
         self.data = json.load(open(json_file))
@@ -37,9 +33,7 @@ class FossilDataset(Dataset):
         image = self.preprocess(Image.open(img_path).convert("RGB"))
         return image, text
 
-# --------------------------
 # Load CLIP
-# --------------------------
 model, _, preprocess = open_clip.create_model_and_transforms(
     model_name,
     pretrained=pretrained
@@ -48,9 +42,7 @@ model, _, preprocess = open_clip.create_model_and_transforms(
 tokenizer = open_clip.get_tokenizer(model_name)
 model = model.to(device)
 
-# --------------------------
 # Freeze EVERYTHING
-# --------------------------
 for p in model.parameters():
     p.requires_grad = False
     
@@ -59,9 +51,8 @@ for name, param in model.named_parameters():
     if "ln" in name.lower() or "layernorm" in name.lower():
         param.requires_grad = True
 
-# --------------------------
+
 # Unfreeze last VISION block
-# --------------------------
 ''''
 vision_blocks = model.visual.transformer.resblocks
 for p in vision_blocks[-1].parameters():
@@ -71,9 +62,8 @@ vision_blocks = model.visual.transformer.resblocks
 for block in vision_blocks[-3:]:  # last 3 blocks
     for p in block.parameters():
         p.requires_grad = True
-# --------------------------
+
 # Unfreeze last TEXT block
-# --------------------------
 '''
 text_blocks = model.transformer.resblocks
 for p in text_blocks[-1].parameters():
@@ -91,9 +81,8 @@ model.logit_scale.requires_grad = True
 print("Trainable parameters:",
       sum(p.numel() for p in model.parameters() if p.requires_grad))
 
-# --------------------------
+
 # Dataloader
-# --------------------------
 def collate(batch):
     images = torch.stack([item[0] for item in batch])
     texts = [item[1] for item in batch]
@@ -108,9 +97,8 @@ loader = DataLoader(
     collate_fn=collate,
     drop_last=True
 )
-# --------------------------
+
 # Loss & Optimizer
-# --------------------------
 criterion = nn.CrossEntropyLoss()
 optimizer = torch.optim.AdamW(
     filter(lambda p: p.requires_grad, model.parameters()),
@@ -118,9 +106,7 @@ optimizer = torch.optim.AdamW(
 )
 
 print("Dataset length:", len(dataset))
-# --------------------------
 # Training
-# --------------------------
 for epoch in range(epochs):
     model.train()
     for imgs, texts in loader:
